@@ -35,11 +35,12 @@ export function initializeGame(participants: ParticipantInput[], catalog: Charac
   if (new Set(participants.map((participant) => participant.id)).size !== participants.length) throw new Error("DUPLICATE_PLAYER_ID: IDs de participantes devem ser únicos.");
   const catalogResult = validateCatalog({ cards: catalog });
   if (!catalogResult.valid) throw new Error(`INVALID_CATALOG: ${catalogResult.errors.join(" ")}`);
+  const normalizedCatalog = structuredClone(catalogResult.cards);
   const random = options.random ?? seededRandom(options.seed ?? Date.now());
   const decks = {} as Record<CardLevel, CharacterCard[]>;
   const visibleCards = {} as Record<CardLevel, CharacterCard[]>;
   ([1, 2, 3] as const).forEach((level) => {
-    const shuffled = shuffle(catalog.filter((card) => card.level === level), random);
+    const shuffled = shuffle(normalizedCatalog.filter((card) => card.level === level), random);
     visibleCards[level] = shuffled.splice(0, 4);
     decks[level] = shuffled;
   });
@@ -48,7 +49,7 @@ export function initializeGame(participants: ParticipantInput[], catalog: Charac
     id: options.id ?? "local-game", phase: "IN_PROGRESS", revision: 0,
     players: participants.map((participant, seatIndex) => ({ ...participant, seatIndex, tokens: emptyResources(), purchasedCardIds: [], reservedCards: [], claimedLocationIds: [] })),
     activePlayerIndex: 0, turnOrder: participants.map((participant) => participant.id), turnNumber: 1, completedRounds: 0,
-    catalog: [...catalog], decks, visibleCards, bank: { ...supply }, initialSupply: { ...supply },
+    catalog: normalizedCatalog, decks, visibleCards, bank: { ...supply }, initialSupply: { ...supply },
     locations: (options.locations ?? []).map((location) => ({ ...location, requiredBonuses: { ...location.requiredBonuses } })),
     avengersOwnerId: null, actionHistory: [], lastEvents: [], finalRoundTriggeredAt: null, winnerIds: [],
   };
