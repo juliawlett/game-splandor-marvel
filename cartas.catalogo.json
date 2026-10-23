@@ -1,0 +1,1632 @@
+{
+  "_info": "Balanceamento original criado para prototipo online; nao representa valores oficiais das cartas de Splendor Marvel.",
+  "_sourceNames": "Marvel_Splendor_Card_List.txt (fornecido pelo usuario)",
+  "_balanceVersion": "1.0.0",
+  "_rules": {
+    "timeStone": "Primeiro recrutamento de qualquer carta de nivel 3 concede 1 ficha verde, maximo 1 por jogador; nao e recurso de pagamento.",
+    "bonuses": "Um bonus permanente da cor da carta reduz em 1 o custo futuro dessa cor.",
+    "avengers": "Os simbolos sao acumulados e podem transferir o marcador de Vingadores."
+  },
+  "cards": [
+    {
+      "id": "SM-L1-004",
+      "name": "Bullseye",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 0,
+        "orange": 0,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-040",
+      "name": "Yondu",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-001",
+      "name": "Abomination",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 1,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-011",
+      "name": "Kate Bishop",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-012",
+      "name": "Kingpin",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-039",
+      "name": "Wong",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-016",
+      "name": "MODOK",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-035",
+      "name": "Valkyrie",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-026",
+      "name": "Scorpion",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 1,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-027",
+      "name": "Silver Sable",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 1,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-028",
+      "name": "Spider-Girl",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-038",
+      "name": "Winter Soldier",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-014",
+      "name": "Lizard",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-021",
+      "name": "Quake",
+      "level": 1,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-034",
+      "name": "Triton",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-006",
+      "name": "Electro",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-007",
+      "name": "Elektra",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 0,
+        "orange": 0,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-033",
+      "name": "Taskmaster",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 1,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-010",
+      "name": "Hawkeye",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 1,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-015",
+      "name": "Lockjaw",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-005",
+      "name": "Crystal",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-018",
+      "name": "Ms Marvel",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 0,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-003",
+      "name": "Baron Zemo",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-009",
+      "name": "Grandmaster",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-023",
+      "name": "Rocket",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 0,
+        "purple": 1,
+        "red": 1
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-025",
+      "name": "Scarlet Spider",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-029",
+      "name": "Spider-Ham",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-019",
+      "name": "Mysterio",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-022",
+      "name": "Rhino",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-037",
+      "name": "Wasp",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 3,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-031",
+      "name": "Spider-Woman",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 1
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-036",
+      "name": "Vulture",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-020",
+      "name": "Prowler",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 1,
+        "orange": 1,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-032",
+      "name": "Squirrel Girl",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 1,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-024",
+      "name": "Sandman",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 1,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-008",
+      "name": "Gorgon",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 0,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-013",
+      "name": "Kraven",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-002",
+      "name": "America Chavez",
+      "level": 1,
+      "cost": {
+        "yellow": 2,
+        "blue": 3,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-030",
+      "name": "Spider-Man 2099",
+      "level": 1,
+      "cost": {
+        "yellow": 1,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L1-017",
+      "name": "Moon Knight",
+      "level": 1,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 0,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-030",
+      "name": "War Machine",
+      "level": 2,
+      "cost": {
+        "yellow": 1,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 1,
+      "avengersSymbols": 2,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-001",
+      "name": "Beta Ray Bill",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-015",
+      "name": "Medusa",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 3,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-026",
+      "name": "Shuri",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 2,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-012",
+      "name": "Karnak",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 3,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 2,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-013",
+      "name": "Maria Hill",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-029",
+      "name": "Venom",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 1,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-011",
+      "name": "Jessica Jones",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-004",
+      "name": "Crossbones",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 3,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 2,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-027",
+      "name": "Star-Lord",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 3,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-020",
+      "name": "Punisher",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 0,
+        "purple": 3,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-019",
+      "name": "Okoye",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 3,
+      "avengersSymbols": 2,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-003",
+      "name": "Carnage",
+      "level": 2,
+      "cost": {
+        "yellow": 1,
+        "blue": 2,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 1,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-022",
+      "name": "Red Skull",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 2,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-006",
+      "name": "Falcon",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 2,
+        "purple": 0,
+        "red": 2
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-002",
+      "name": "Black Cat",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 0,
+        "purple": 2,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-009",
+      "name": "Groot",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 3,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 2,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-024",
+      "name": "Scarlet Witch",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-028",
+      "name": "The Collector",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 1,
+        "orange": 0,
+        "purple": 2,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-018",
+      "name": "Nick Fury",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 2,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-007",
+      "name": "Ghost Rider",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 0,
+        "purple": 2,
+        "red": 3
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 2,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-014",
+      "name": "Maximus",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 0,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-021",
+      "name": "Quicksilver",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 2,
+        "orange": 3,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 2,
+      "avengersSymbols": 2,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-016",
+      "name": "Miles Morales",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 3,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-017",
+      "name": "Nebula",
+      "level": 2,
+      "cost": {
+        "yellow": 1,
+        "blue": 0,
+        "orange": 2,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 1,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-023",
+      "name": "Ronan",
+      "level": 2,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 0,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 1,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-025",
+      "name": "She-Hulk",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-008",
+      "name": "Ghost-Spider",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 2,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-005",
+      "name": "Daredevil",
+      "level": 2,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 0,
+        "purple": 3,
+        "red": 3
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 2,
+      "avengersSymbols": 1,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L2-010",
+      "name": "Hela",
+      "level": 2,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 3,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": false,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-010",
+      "name": "Gamora",
+      "level": 3,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 2,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 3,
+      "avengersSymbols": 2,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-016",
+      "name": "Luke Cage",
+      "level": 3,
+      "cost": {
+        "yellow": 2,
+        "blue": 3,
+        "orange": 2,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-002",
+      "name": "Black Bolt",
+      "level": 3,
+      "cost": {
+        "yellow": 0,
+        "blue": 3,
+        "orange": 3,
+        "purple": 2,
+        "red": 3
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-004",
+      "name": "Black Widow",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 3,
+        "purple": 3,
+        "red": 3
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 5,
+      "avengersSymbols": 1,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-007",
+      "name": "Doctor Octopus",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 4,
+        "red": 3
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-014",
+      "name": "Iron Man",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 4,
+        "orange": 4,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-005",
+      "name": "Captain America",
+      "level": 3,
+      "cost": {
+        "yellow": 2,
+        "blue": 2,
+        "orange": 3,
+        "purple": 2,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 4,
+      "avengersSymbols": 2,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-012",
+      "name": "Hulk",
+      "level": 3,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 3,
+        "red": 3
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-015",
+      "name": "Loki",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 0,
+        "orange": 2,
+        "purple": 3,
+        "red": 3
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 5,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-013",
+      "name": "Iron Fist",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 3,
+        "red": 3
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 4,
+      "avengersSymbols": 1,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-020",
+      "name": "Vision",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 4,
+        "orange": 3,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 3,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-008",
+      "name": "Doctor Strange",
+      "level": 3,
+      "cost": {
+        "yellow": 4,
+        "blue": 4,
+        "orange": 3,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-006",
+      "name": "Captain Marvel",
+      "level": 3,
+      "cost": {
+        "yellow": 0,
+        "blue": 2,
+        "orange": 2,
+        "purple": 3,
+        "red": 2
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 4,
+      "avengersSymbols": 2,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-017",
+      "name": "Nova",
+      "level": 3,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 3,
+        "purple": 2,
+        "red": 3
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 5,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-018",
+      "name": "Spider-Man",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 3,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-001",
+      "name": "Ant-Man",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 3,
+        "purple": 0,
+        "red": 3
+      },
+      "bonusColor": "purple",
+      "infinityPoints": 3,
+      "avengersSymbols": 1,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-009",
+      "name": "Drax",
+      "level": 3,
+      "cost": {
+        "yellow": 4,
+        "blue": 3,
+        "orange": 3,
+        "purple": 3,
+        "red": 0
+      },
+      "bonusColor": "red",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-019",
+      "name": "Thor",
+      "level": 3,
+      "cost": {
+        "yellow": 0,
+        "blue": 4,
+        "orange": 3,
+        "purple": 3,
+        "red": 4
+      },
+      "bonusColor": "yellow",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-011",
+      "name": "Green Goblin",
+      "level": 3,
+      "cost": {
+        "yellow": 2,
+        "blue": 0,
+        "orange": 2,
+        "purple": 2,
+        "red": 3
+      },
+      "bonusColor": "blue",
+      "infinityPoints": 5,
+      "avengersSymbols": 2,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    },
+    {
+      "id": "SM-L3-003",
+      "name": "Black Panther",
+      "level": 3,
+      "cost": {
+        "yellow": 3,
+        "blue": 3,
+        "orange": 0,
+        "purple": 2,
+        "red": 2
+      },
+      "bonusColor": "orange",
+      "infinityPoints": 4,
+      "avengersSymbols": 0,
+      "grantsTimeStone": true,
+      "imageAsset": null,
+      "verification": "balanceamento_original_nao_oficial"
+    }
+  ]
+}
