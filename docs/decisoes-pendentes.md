@@ -30,7 +30,7 @@ Ainda falta uma decisão de produto para um estado extremo em que nenhum jogador
 
 ## Privacidade e idempotência futura
 
-O núcleo já mascara reservas e bloqueia `actionId` repetido. `matchId`, `turnId`, autenticação e `expectedRevision` pertencem à futura camada de comando/servidor; não foram adicionados como falsa infraestrutura local.
+O núcleo diferencia reservas públicas da mesa e reservas ocultas do topo, bloqueia `actionId` repetido e valida estruturalmente toda ação recebida. `matchId`, `turnId`, autenticação e `expectedRevision` pertencem à futura camada de comando/servidor; não foram adicionados como falsa infraestrutura local.
 
 ## Propriedade intelectual
 
@@ -38,4 +38,8 @@ Não há imagens oficiais no projeto. Os placeholders são tipográficos. Uma pu
 
 ## Auditoria de dependências
 
-`npm audit --omit=dev` não encontrou vulnerabilidades nas dependências de produção. A auditoria completa aponta cinco ocorrências altas em `braces`, alcançado pela cadeia de lint do `eslint-config-next` 16.4.2. A correção automática proposta exige forçar downgrade incompatível para Next 14; por isso não foi aplicada. Reavaliar quando a configuração oficial do Next atualizar essa cadeia.
+Em 23/10/2026, `npm audit --omit=dev` não encontrou vulnerabilidades nas dependências de produção. A auditoria completa aponta cinco ocorrências altas em `braces`, alcançado pela cadeia de lint do `eslint-config-next` 16.4.2. A correção automática proposta exige forçar downgrade incompatível para Next 14; por isso não foi aplicada. Reavaliar quando a configuração oficial do Next atualizar essa cadeia.
+
+## Prontidão operacional
+
+O motor está preparado arquiteturalmente para receber uma interface jogável, mas não deve ser descrito como pronto para produção ou multiplayer. Ainda faltam persistência autoritativa, controle de concorrência/versão, autenticação, limites de requisição e testes de transporte.

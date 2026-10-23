@@ -39,11 +39,12 @@ npm run build
 
 - Catálogo validado em 40/30/20 cartas e inicialização determinística para 2–4 participantes.
 - Motor imutável no formato `GameState + GameAction -> novo GameState + eventos`.
+- Validação estrutural de ações recebidas em runtime, antes de acessar ou alterar o estado.
 - Recursos, reservas, recrutamento, descontos, curingas, limite de fichas e turnos.
 - Joia do Tempo, Vingadores, contratos de Local, Manopla, rodada final e desempates.
-- Projeção de estado que oculta reservas e ordem dos baralhos.
+- Projeção defensiva que mantém reservas da mesa públicas, oculta reservas do topo e nunca expõe a ordem dos baralhos.
 - Home responsiva e catálogo pesquisável/filtrável, sem arte protegida.
-- Testes automatizados com Vitest.
+- 60 testes automatizados com Vitest, incluindo integridade, privacidade e desempates.
 
 ## Ainda não implementado
 

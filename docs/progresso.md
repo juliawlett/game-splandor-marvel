@@ -22,6 +22,17 @@ Atualizado em 23/10/2026.
 - [x] Documentação de arquitetura e decisões pendentes.
 - [x] Build de produção e verificação HTTP local das rotas `/` e `/catalogo`.
 
+## Revisão final da Etapa 1 — concluído
+
+- [x] Validação estrutural de ações recebidas como `unknown`.
+- [x] Visibilidade correta para reservas da mesa e do topo.
+- [x] Eventos de reserva oculta sem `cardId` secreto.
+- [x] Projeções defensivas sem referências mutáveis ao estado autoritativo.
+- [x] Bloqueio de coleta vazia quando o banco comum está esgotado.
+- [x] Auditoria de turnos, pagamentos, Locais, Vingadores, Tempo e rodada final.
+- [x] Testes de conservação de recursos e unicidade das 90 cartas entre zonas.
+- [x] Cobertura ampliada de 19 para 60 testes comportamentais.
+
 ## Limitações conhecidas
 
 - O conteúdo de Locais está ausente, portanto a partida padrão não instancia Locais.
