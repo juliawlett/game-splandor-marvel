@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { applyGameAction, discountedCost, emptyResources, getPlayerView, initializeGame, playerScore, resourceConservationHolds, type GameState, type ResourceMap } from "../core";
 import { cardCatalog } from "../data/catalog";
+import { giveCardToPlayer, removeCardFromPlay } from "./fixtures";
 
 const players = [{ id: "p1", name: "Ana", type: "HUMAN" as const }, { id: "p2", name: "Bot", type: "BOT" as const }];
 const setup = () => initializeGame(players, cardCatalog, { seed: 3 });
@@ -25,7 +26,10 @@ describe("recursos e controle de turno", () => {
 
   it("permite menos cores apenas quando o banco não oferece três", () => {
     const state = setup();
-    for (const color of ["orange", "purple", "red"] as const) state.bank[color] = 0;
+    for (const color of ["orange", "purple", "red"] as const) {
+      grantTokens(state, 0, { [color]: 2 });
+      grantTokens(state, 1, { [color]: 2 });
+    }
     const invalid = applyGameAction(state, { type: "TAKE_DIFFERENT", playerId: "p1", actionId: "a1", colors: ["yellow"] });
     expect(invalid).toMatchObject({ ok: false, error: { code: "INVALID_TOKEN_SELECTION" } });
     const valid = applyGameAction(state, { type: "TAKE_DIFFERENT", playerId: "p1", actionId: "a2", colors: ["yellow", "blue"] });
@@ -34,9 +38,10 @@ describe("recursos e controle de turno", () => {
 
   it("exige quatro fichas no banco para retirar duas iguais", () => {
     const state = setup();
-    state.bank.yellow = 3;
+    grantTokens(state, 1, { yellow: 1 });
     expect(applyGameAction(state, { type: "TAKE_SAME", playerId: "p1", actionId: "a1", color: "yellow" })).toMatchObject({ ok: false, error: { code: "INSUFFICIENT_BANK" } });
-    state.bank.yellow = 4;
+    state.players[1]!.tokens.yellow -= 1;
+    state.bank.yellow += 1;
     expect(applyGameAction(state, { type: "TAKE_SAME", playerId: "p1", actionId: "a2", color: "yellow" }).ok).toBe(true);
   });
 
@@ -55,6 +60,7 @@ describe("recursos e controle de turno", () => {
     if (!taken.ok) return;
     expect(taken.state.phase).toBe("AWAITING_TOKEN_RETURN");
     expect(taken.state.activePlayerIndex).toBe(0);
+    expect(applyGameAction(taken.state, { type: "TAKE_SAME", playerId: "p1", actionId: "blocked", color: "yellow" })).toMatchObject({ ok: false, error: { code: "INVALID_PHASE" } });
     const returned = applyGameAction(taken.state, { type: "RETURN_EXCESS_TOKENS", playerId: "p1", actionId: "return", tokens: payment({ yellow: 1, blue: 1 }) });
     expect(returned.ok).toBe(true);
     if (returned.ok) expect(returned.state.activePlayerIndex).toBe(1);
@@ -83,9 +89,14 @@ describe("reservas", () => {
     if (!result.ok) return;
     expect(getPlayerView(result.state, "p2").players[0]!.reservedCards[0]!.cardId).toBeNull();
     expect(getPlayerView(result.state, "p1").players[0]!.reservedCards[0]!.cardId).toBe(topId);
-    const limited = setup(); limited.players[0]!.reservedCards = [{ cardId: "1", hidden: true }, { cardId: "2", hidden: true }, { cardId: "3", hidden: true }];
+    const limited = setup();
+    for (const card of cardCatalog.slice(0, 3)) {
+      removeCardFromPlay(limited, card.id);
+      limited.players[0]!.reservedCards.push({ cardId: card.id, hidden: true });
+    }
     expect(applyGameAction(limited, { type: "RESERVE_TOP", playerId: "p1", actionId: "limit", level: 1 })).toMatchObject({ ok: false, error: { code: "RESERVATION_LIMIT" } });
-    const empty = setup(); empty.decks[1] = [];
+    const empty = setup();
+    for (const card of [...empty.decks[1]]) giveCardToPlayer(empty, 1, card.id);
     expect(applyGameAction(empty, { type: "RESERVE_TOP", playerId: "p1", actionId: "empty", level: 1 })).toMatchObject({ ok: false, error: { code: "EMPTY_DECK" } });
   });
 });
@@ -96,7 +107,7 @@ describe("recrutamento e efeitos", () => {
     const target = state.visibleCards[1][0]!;
     for (const color of ["yellow", "blue", "orange", "purple", "red"] as const) {
       const count = target.cost[color];
-      state.players[0]!.purchasedCardIds.push(...cardCatalog.filter((card) => card.bonusColor === color && card.id !== target.id).slice(0, count).map((card) => card.id));
+      cardCatalog.filter((card) => card.bonusColor === color && card.id !== target.id).slice(0, count).forEach((card) => giveCardToPlayer(state, 0, card.id));
     }
     expect(discountedCost(target, { yellow: 99, blue: 99, orange: 99, purple: 99, red: 99 })).toEqual({ yellow: 0, blue: 0, orange: 0, purple: 0, red: 0 });
     const result = applyGameAction(state, { type: "RECRUIT_VISIBLE", playerId: "p1", actionId: "free", cardId: target.id, payment: payment() });
@@ -120,7 +131,9 @@ describe("recrutamento e efeitos", () => {
   it("concede uma única Joia do Tempo na primeira carta de nível 3", () => {
     const state = setup();
     const target = state.visibleCards[3][0]!;
-    for (const color of ["yellow", "blue", "orange", "purple", "red"] as const) state.players[0]!.purchasedCardIds.push(...cardCatalog.filter((card) => card.bonusColor === color && card.id !== target.id).slice(0, target.cost[color]).map((card) => card.id));
+    for (const color of ["yellow", "blue", "orange", "purple", "red"] as const) {
+      cardCatalog.filter((card) => card.bonusColor === color && card.id !== target.id).slice(0, target.cost[color]).forEach((card) => giveCardToPlayer(state, 0, card.id));
+    }
     const result = applyGameAction(state, { type: "RECRUIT_VISIBLE", playerId: "p1", actionId: "time", cardId: target.id, payment: payment() });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
@@ -151,9 +164,10 @@ describe("Locais e vitória", () => {
   it("encerra no fim da rodada e escolhe jogador elegível à Manopla", () => {
     const state = setup();
     const champion = state.players[0]!;
-    champion.purchasedCardIds = (["yellow", "blue", "orange", "purple", "red"] as const).map((color) =>
-      cardCatalog.filter((card) => card.bonusColor === color).sort((a, b) => b.infinityPoints - a.infinityPoints)[0]!.id,
-    );
+    (["yellow", "blue", "orange", "purple", "red"] as const).forEach((color) => {
+      const card = cardCatalog.filter((item) => item.bonusColor === color).sort((a, b) => b.infinityPoints - a.infinityPoints)[0]!;
+      giveCardToPlayer(state, 0, card.id);
+    });
     champion.tokens.green = 1;
     state.bank.green -= 1;
     expect(playerScore(state, champion)).toBeGreaterThanOrEqual(16);
