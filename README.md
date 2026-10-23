@@ -1,4 +1,62 @@
-# Documentação inicial — jogo digital inspirado em Splendor: Marvel
+# Nexus Infinito — jogo de estratégia por turnos
+
+Fundação local de um jogo digital inspirado em **Splendor: Marvel**. O projeto não é oficial nem licenciado. Os custos, bônus, pontos e símbolos presentes no catálogo são um balanceamento autoral e experimental.
+
+Esta entrega corresponde à **Etapa 1: fundação e motor de regras**. Não existe partida visual jogável ainda.
+
+## Requisitos e execução local
+
+- Node.js 20.9 ou superior (recomendado: LTS 22)
+- npm 10 ou superior
+
+```bash
+npm install
+npm run dev
+```
+
+Acesse `http://localhost:3000`. A página `/catalogo` usa somente o JSON local, sem API externa.
+
+Verificações disponíveis:
+
+```bash
+npm test
+npm run lint
+npm run typecheck
+npm run build
+```
+
+## Estrutura implementada
+
+- `src/app/`: App Router, layout, página inicial e catálogo.
+- `src/features/game/`: apresentação específica do catálogo.
+- `src/game/core/`: motor TypeScript puro, ações, regras, seletores e contratos.
+- `src/game/data/`: importação e validação estrita do catálogo.
+- `src/game/tests/`: testes unitários e fixtures determinísticas.
+- `docs/`: arquitetura, decisões pendentes e progresso.
+- `cartas.catalogo.json`: fonte única dos 90 personagens usados no protótipo.
+
+## Entregue na Etapa 1
+
+- Catálogo validado em 40/30/20 cartas e inicialização determinística para 2–4 participantes.
+- Motor imutável no formato `GameState + GameAction -> novo GameState + eventos`.
+- Recursos, reservas, recrutamento, descontos, curingas, limite de fichas e turnos.
+- Joia do Tempo, Vingadores, contratos de Local, Manopla, rodada final e desempates.
+- Projeção de estado que oculta reservas e ordem dos baralhos.
+- Home responsiva e catálogo pesquisável/filtrável, sem arte protegida.
+- Testes automatizados com Vitest.
+
+## Ainda não implementado
+
+- Tabuleiro e partida interativa na interface.
+- Robôs estratégicos, multiplayer, WebSocket ou backend.
+- Contas, autenticação, banco de dados, ranking, chat e deploy.
+- Dados definitivos das faces de Local e artes oficiais.
+
+Consulte [a arquitetura](docs/arquitetura.md), [as decisões pendentes](docs/decisoes-pendentes.md) e [o progresso](docs/progresso.md). A próxima etapa recomendada é uma partida local visual sobre o motor atual, seguida de um primeiro bot que selecione apenas ações legais.
+
+---
+
+## Documentação de pesquisa original
 
 > Versão 0.1 — 22/10/2026. Idioma: pt-BR. Objetivo: especificar regras, fluxos e dados **antes de desenvolver**. Este material descreve o jogo de mesa como referência e propõe uma adaptação digital; não é um produto oficial ou licenciado.
 
@@ -10,17 +68,17 @@ Jogo online por turnos com **2–4 participantes totais**, aceitando **humanos e
 
 | Arquivo | Tema | Status |
 |---|---|---|
-| [01-visao-e-componentes.md](01-visao-e-componentes.md) | Conceito, peças e configuração | Fundamentado |
+| `01-visao-e-componentes.md` | Conceito, peças e configuração | Arquivo ausente; registrado em decisões |
 | [02-regras-oficiais.md](02-regras-oficiais.md) | Ações, reservas, descontos, vitória | Fundamentado |
 | [03-fluxo-e-turnos.md](03-fluxo-e-turnos.md) | Fluxo e máquina de estados | Proposta digital |
 | [04-joias-e-recursos.md](04-joias-e-recursos.md) | Tipos, quantidades e economia | Fundamentado |
 | [05-cartas-e-personagens.md](05-cartas-e-personagens.md) | Nomes das **90 cartas** separados por nível | Lista comunitária; validação pendente |
-| [06-locais-e-especiais.md](06-locais-e-especiais.md) | Locais, Vingadores e Manopla | Regras fundamentadas; dados das faces pendentes |
+| `06-locais-e-especiais.md` | Locais, Vingadores e Manopla | Arquivo ausente; dados das faces pendentes |
 | [07-modos-robo-e-multiplayer.md](07-modos-robo-e-multiplayer.md) | IA, lobby, WebSocket, sincronização | Proposta digital |
 | [08-modelagem-e-contratos.md](08-modelagem-e-contratos.md) | Tipos de dados, eventos e validações | Proposta digital |
-| [09-testes-e-casos-limite.md](09-testes-e-casos-limite.md) | Casos mínimos de aceite | Proposta digital |
-| [10-pendencias-e-fontes.md](10-pendencias-e-fontes.md) | Lacunas e fontes verificáveis | Aberto |
-| [data/cartas.catalogo.json](data/cartas.catalogo.json) | 90 registros nome/nível, campos desconhecidos nulos | Rascunho de dados |
+| `09-testes-e-casos-limite.md` | Casos mínimos de aceite | Arquivo ausente; testes implementados em `src/game/tests` |
+| `10-pendencias-e-fontes.md` | Lacunas e fontes verificáveis | Arquivo ausente; substituído por `docs/decisoes-pendentes.md` |
+| [cartas.catalogo.json](cartas.catalogo.json) | 90 registros com balanceamento experimental | Fonte de gameplay validada |
 
 ## Princípios
 
@@ -39,7 +97,7 @@ Jogo online por turnos com **2–4 participantes totais**, aceitando **humanos e
 - [ ] Auditar **90 cartas** (custo, pontos, bônus, símbolos dos Vingadores, imagem).
 - [ ] Auditar **8 faces** dos 4 cartões de Local (nome, cor e quantidade exigida).
 - [ ] Definir identidade gráfica/licenciamento para publicação.
-- [ ] Implementar motor de regras + testes.
+- [x] Implementar a fundação do motor de regras + testes automatizados.
 
 ## Fontes e grau de confiança
 
