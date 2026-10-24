@@ -4,8 +4,8 @@ import { resolve } from "node:path";
 export default defineConfig({
   test: {
     environment: "node",
-    include: ["src/game/tests/**/*.test.ts"],
+    include: ["src/game/tests/**/*.test.ts", "src/server/tests/**/*.test.ts"],
     coverage: { reporter: ["text", "html"] },
   },
-  resolve: { alias: { "@": resolve(import.meta.dirname, "src") } },
+  resolve: { alias: { "@": resolve(import.meta.dirname, "src"), "server-only": resolve(import.meta.dirname, "src/test/server-only.ts") } },
 });
