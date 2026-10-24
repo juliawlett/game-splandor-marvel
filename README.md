@@ -2,11 +2,11 @@
 
 Fundação local de um jogo digital inspirado em **Splendor: Marvel**. O projeto não é oficial nem licenciado. Os custos, bônus, pontos e símbolos presentes no catálogo são um balanceamento autoral e experimental.
 
-Esta entrega corresponde à **Etapa 1: fundação e motor de regras**. Não existe partida visual jogável ainda.
+As Etapas 1 e 2 entregam o motor de regras e uma partida local completa contra robôs. O multiplayer online ainda não foi iniciado.
 
 ## Requisitos e execução local
 
-- Node.js 20.9 ou superior (recomendado: LTS 22)
+- Node.js 20.9 ou superior (recomendado: LTS 22.13+)
 - npm 10 ou superior
 
 ```bash
@@ -14,7 +14,7 @@ npm install
 npm run dev
 ```
 
-Acesse `http://localhost:3000`. A página `/catalogo` usa somente o JSON local, sem API externa.
+Acesse `http://localhost:3000`. Use `/jogar` para configurar uma partida contra 1 a 3 robôs e `/catalogo` para consultar as 90 cartas. Tudo funciona localmente, sem API externa.
 
 Verificações disponíveis:
 
@@ -22,6 +22,7 @@ Verificações disponíveis:
 npm test
 npm run lint
 npm run typecheck
+npm run simulate
 npm run build
 ```
 
@@ -29,13 +30,16 @@ npm run build
 
 - `src/app/`: App Router, layout, página inicial e catálogo.
 - `src/features/game/`: apresentação específica do catálogo.
+- `src/features/game/local/`: controlador local e componentes do tabuleiro.
 - `src/game/core/`: motor TypeScript puro, ações, regras, seletores e contratos.
+- `src/game/bots/`: decisão determinística do robô básico a partir de `GameView`.
+- `src/game/simulation/`: partidas automáticas e validação de invariantes.
 - `src/game/data/`: importação e validação estrita do catálogo.
 - `src/game/tests/`: testes unitários e fixtures determinísticas.
 - `docs/`: arquitetura, decisões pendentes e progresso.
 - `cartas.catalogo.json`: fonte única dos 90 personagens usados no protótipo.
 
-## Entregue na Etapa 1
+## Entregue
 
 - Catálogo validado em 40/30/20 cartas e inicialização determinística para 2–4 participantes.
 - Motor imutável no formato `GameState + GameAction -> novo GameState + eventos`.
@@ -44,16 +48,37 @@ npm run build
 - Joia do Tempo, Vingadores, contratos de Local, Manopla, rodada final e desempates.
 - Projeção defensiva que mantém reservas da mesa públicas, oculta reservas do topo e nunca expõe a ordem dos baralhos.
 - Home responsiva e catálogo pesquisável/filtrável, sem arte protegida.
-- 60 testes automatizados com Vitest, incluindo integridade, privacidade e desempates.
+- Configuração local para uma pessoa contra 1, 2 ou 3 robôs.
+- Tabuleiro responsivo com mercado, banco, coleta, reserva, recrutamento, pagamento ajustável, descarte obrigatório, histórico e resultado final.
+- Robô básico que enumera ações legais pela visão autorizada, pontua alternativas e resolve etapas obrigatórias.
+- Simulador reproduzível com checagem de conservação de recursos, unicidade das cartas e ordem de turnos.
+- 78 testes automatizados com Vitest, incluindo integridade, privacidade, bots, controlador local e simulações.
+
+## Como jogar contra robôs
+
+1. Execute `npm run dev` e abra `http://localhost:3000/jogar`.
+2. Informe seu nome, escolha de 1 a 3 robôs e, opcionalmente, uma seed.
+3. No seu turno, colete joias, abra uma carta para recrutar ou reservar, ou reserve o topo de um nível.
+4. Quando houver excesso de fichas, conclua a devolução obrigatória. Os robôs jogam automaticamente.
+5. A classificação vem do motor quando a rodada final termina.
+
+O simulador usa os mesmos `initializeGame`, `getPlayerView` e `applyGameAction` da interface:
+
+```bash
+npm run simulate
+npm run simulate -- --games=200 --turns=700
+```
+
+O limite não produz vitória artificial. Uma partida que não termina é reportada como inconclusiva.
 
 ## Ainda não implementado
 
-- Tabuleiro e partida interativa na interface.
-- Robôs estratégicos, multiplayer, WebSocket ou backend.
+- Multiplayer, WebSocket ou backend.
+- Dificuldades avançadas e busca estratégica para os robôs.
 - Contas, autenticação, banco de dados, ranking, chat e deploy.
 - Dados definitivos das faces de Local e artes oficiais.
 
-Consulte [a arquitetura](docs/arquitetura.md), [as decisões pendentes](docs/decisoes-pendentes.md) e [o progresso](docs/progresso.md). A próxima etapa recomendada é uma partida local visual sobre o motor atual, seguida de um primeiro bot que selecione apenas ações legais.
+Consulte [a arquitetura](docs/arquitetura.md), [as decisões pendentes](docs/decisoes-pendentes.md) e [o progresso](docs/progresso.md). A próxima etapa recomendada é consolidar o catálogo de Locais e planejar uma camada autoritativa de transporte para multiplayer, sem mover regras para a interface.
 
 ---
 
