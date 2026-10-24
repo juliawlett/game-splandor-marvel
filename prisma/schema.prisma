@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum GameSessionStatus {
+  ACTIVE
+  FINISHED
+  ABANDONED
+  RESTARTED
+}
+
+model GameSession {
+  id             String            @id @db.VarChar(64)
+  ownerSessionId String            @db.Char(64)
+  status         GameSessionStatus @default(ACTIVE)
+  revision       Int               @default(0)
+  stateJson      Json
+  schemaVersion  Int               @default(1)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  finishedAt     DateTime?
+  actions        GameActionLog[]
+
+  @@index([ownerSessionId, status, updatedAt])
+}
+
+model GameActionLog {
+  id            String      @id @default(cuid()) @db.VarChar(64)
+  gameSessionId String      @db.VarChar(64)
+  actionId      String      @db.VarChar(191)
+  playerId      String      @db.VarChar(64)
+  revision      Int
+  actionType    String      @db.VarChar(64)
+  payload       Json
+  createdAt     DateTime    @default(now())
+  gameSession   GameSession @relation(fields: [gameSessionId], references: [id], onDelete: Cascade)
+
+  @@unique([gameSessionId, actionId])
+  @@index([gameSessionId, revision])
+}
