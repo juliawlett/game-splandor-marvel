@@ -1,5 +1,5 @@
 import { REGULAR_COLORS, TOKEN_COLORS, type CharacterCard, type Cost, type ResourceMap } from "../types/game";
-import { isNonNegativeIntegerMap } from "./resources";
+import { emptyResources, isNonNegativeIntegerMap } from "./resources";
 
 export const discountedCost = (card: CharacterCard, bonuses: Cost): Cost =>
   Object.fromEntries(REGULAR_COLORS.map((color) => [color, Math.max(0, card.cost[color] - bonuses[color])])) as Cost;
@@ -15,4 +15,22 @@ export function validatePayment(cost: Cost, payment: ResourceMap, available: Res
   }
   if (payment.gray !== grayRequired) return payment.gray < grayRequired ? "Pagamento insuficiente." : "Pagamento excessivo em curingas.";
   return null;
+}
+
+export function suggestPayment(cost: Cost, available: ResourceMap): ResourceMap | null {
+  const payment = emptyResources();
+  let grayNeeded = 0;
+
+  for (const color of REGULAR_COLORS) {
+    payment[color] = Math.min(cost[color], available[color]);
+    grayNeeded += cost[color] - payment[color];
+  }
+
+  if (grayNeeded > available.gray) return null;
+  payment.gray = grayNeeded;
+  return payment;
+}
+
+export function suggestCardPayment(card: CharacterCard, bonuses: Cost, available: ResourceMap): ResourceMap | null {
+  return suggestPayment(discountedCost(card, bonuses), available);
 }

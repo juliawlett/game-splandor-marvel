@@ -6,3 +6,4 @@ export * from "./rules/derived";
 export * from "./rules/payment";
 export * from "./rules/resources";
 export * from "./selectors/public-state";
+export * from "./selectors/legal-actions";
