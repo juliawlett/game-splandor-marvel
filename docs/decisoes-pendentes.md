@@ -57,7 +57,7 @@ Não há imagens oficiais no projeto. Os placeholders são tipográficos. Uma pu
 
 ## Auditoria de dependências
 
-Em 23/10/2026, após a atualização do lockfile ao adicionar o executor de desenvolvimento `tsx`, `npm audit --omit=dev` e `npm audit` não encontraram vulnerabilidades. `tsx` existe somente para executar o simulador TypeScript sem duplicar o motor em JavaScript.
+Em 24/10/2026, após adicionar Prisma 7.10.1, `@prisma/client`, `@prisma/adapter-mariadb` e `dotenv`, `npm audit --omit=dev` e `npm audit` não encontraram vulnerabilidades. Client, adapter e dotenv são dependências de produção; `prisma` (CLI), Vitest, TypeScript e `tsx` são dependências de desenvolvimento. `tsx` executa o simulador TypeScript sem duplicar o motor em JavaScript.
 
 O npm emitiu um aviso de engine para `eslint-visitor-keys@5.0.1`: a versão instalada do Node era 22.12.0, enquanto essa dependência de desenvolvimento requer Node 22.13.0 ou superior dentro da linha 22. O lint concluiu corretamente, mas recomenda-se Node LTS 22.13+ para eliminar a diferença de ambiente.
 
