@@ -41,13 +41,15 @@ A dificuldade básica usa pesos simples e informação imperfeita. Ainda precisa
 
 O bot atual não deve ser descrito como adversário avançado. As 100 simulações iniciais comprovam execução e invariantes dentro desse lote, não ausência universal de travamentos.
 
-## Persistência local
+## Causa do reinício e persistência
 
-A partida vive em memória e reiniciar a página a descarta. `localStorage`, migração de snapshots e restauração após atualização continuam opcionais e pendentes; não são pré-requisito para a partida local da Etapa 2.
+Foi comprovado que `useLocalGame` mantinha o `GameState` exclusivamente em `useState`; F5, navegação e remontagem destruíam o snapshot. A hipótese de reinícios adicionais por Fast Refresh/Strict Mode não foi reproduzida, mas deixou de poder substituir o estado oficial porque a montagem agora apenas consulta o MySQL.
 
-## Privacidade e idempotência futura
+MySQL é a fonte autoritativa e `localStorage` não é usado. Em 24/10/2026, o serviço `MySQL2610` e a porta local 3306 estavam acessíveis, mas não havia `DATABASE_URL` nem cliente `mysql` no PATH. Portanto, versão, schema selecionado, consulta real, migração e recuperação ponta a ponta ainda dependem das credenciais da aplicação; possuir apenas o Workbench não satisfaz esse requisito.
 
-O núcleo diferencia reservas públicas da mesa e reservas ocultas do topo, bloqueia `actionId` repetido e valida estruturalmente toda ação recebida. `matchId`, `turnId`, autenticação e `expectedRevision` pertencem à futura camada de comando/servidor; não foram adicionados como falsa infraestrutura local.
+## Privacidade e idempotência
+
+O núcleo diferencia reservas públicas da mesa e reservas ocultas do topo. A camada persistente adiciona `gameSessionId`, `expectedRevision` e unicidade de `actionId`. A sessão anônima HttpOnly é adequada ao jogo local, mas não substitui contas, revogação avançada, rate limiting e autenticação para multiplayer.
 
 ## Propriedade intelectual
 

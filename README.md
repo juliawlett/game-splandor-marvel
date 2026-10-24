@@ -2,19 +2,22 @@
 
 Fundação local de um jogo digital inspirado em **Splendor: Marvel**. O projeto não é oficial nem licenciado. Os custos, bônus, pontos e símbolos presentes no catálogo são um balanceamento autoral e experimental.
 
-As Etapas 1 e 2 entregam o motor de regras e uma partida local completa contra robôs. O multiplayer online ainda não foi iniciado.
+As Etapas 1 e 2 entregam o motor de regras e uma partida local completa contra robôs. A partida possui persistência autoritativa em MySQL; o multiplayer online ainda não foi iniciado.
 
 ## Requisitos e execução local
 
 - Node.js 20.9 ou superior (recomendado: LTS 22.13+)
 - npm 10 ou superior
+- MySQL Server 8 compatível (o Workbench é opcional e não substitui o servidor)
 
 ```bash
 npm install
+npm run db:check
+npm run db:migrate:deploy
 npm run dev
 ```
 
-Acesse `http://localhost:3000`. Use `/jogar` para configurar uma partida contra 1 a 3 robôs e `/catalogo` para consultar as 90 cartas. Tudo funciona localmente, sem API externa.
+Acesse `http://localhost:3000`. Use `/jogar` para configurar uma partida contra 1 a 3 robôs e `/catalogo` para consultar as 90 cartas. Configure `.env` conforme [o guia do MySQL local](docs/mysql-local.md); a conexão fica exclusivamente no servidor.
 
 Verificações disponíveis:
 
@@ -24,6 +27,7 @@ npm run lint
 npm run typecheck
 npm run simulate
 npm run build
+npm run test:mysql
 ```
 
 ## Estrutura implementada
@@ -31,6 +35,9 @@ npm run build
 - `src/app/`: App Router, layout, página inicial e catálogo.
 - `src/features/game/`: apresentação específica do catálogo.
 - `src/features/game/local/`: controlador local e componentes do tabuleiro.
+- `src/server/`: sessão anônima, repositório Prisma, serviço autoritativo e validação de snapshots.
+- `src/app/api/games/`: Route Handlers de criação, recuperação, ações, robôs, reinício e abandono.
+- `prisma/`: schema e migrações versionadas do MySQL.
 - `src/game/core/`: motor TypeScript puro, ações, regras, seletores e contratos.
 - `src/game/bots/`: decisão determinística do robô básico a partir de `GameView`.
 - `src/game/simulation/`: partidas automáticas e validação de invariantes.
@@ -52,15 +59,19 @@ npm run build
 - Tabuleiro responsivo com mercado, banco, coleta, reserva, recrutamento, pagamento ajustável, descarte obrigatório, histórico e resultado final.
 - Robô básico que enumera ações legais pela visão autorizada, pontua alternativas e resolve etapas obrigatórias.
 - Simulador reproduzível com checagem de conservação de recursos, unicidade das cartas e ordem de turnos.
-- 78 testes automatizados com Vitest, incluindo integridade, privacidade, bots, controlador local e simulações.
+- Snapshot completo persistido no MySQL e projeções produzidas por `getPlayerView`.
+- Concorrência otimista por `revision`, idempotência persistida e gravação atômica de ação + estado.
+- Robôs processados no servidor; o navegador apenas solicita o avanço.
+- 87 testes locais com Vitest, além da suíte MySQL condicionada a schema isolado.
 
 ## Como jogar contra robôs
 
-1. Execute `npm run dev` e abra `http://localhost:3000/jogar`.
+1. Configure e migre o MySQL, execute `npm run dev` e abra `http://localhost:3000/jogar`.
 2. Informe seu nome, escolha de 1 a 3 robôs e, opcionalmente, uma seed.
 3. No seu turno, colete joias, abra uma carta para recrutar ou reservar, ou reserve o topo de um nível.
 4. Quando houver excesso de fichas, conclua a devolução obrigatória. Os robôs jogam automaticamente.
-5. A classificação vem do motor quando a rodada final termina.
+5. Ao recarregar, escolha **Continuar partida** para recuperar o mesmo turno e revisão.
+6. A classificação vem do motor quando a rodada final termina.
 
 O simulador usa os mesmos `initializeGame`, `getPlayerView` e `applyGameAction` da interface:
 
@@ -73,9 +84,9 @@ O limite não produz vitória artificial. Uma partida que não termina é report
 
 ## Ainda não implementado
 
-- Multiplayer, WebSocket ou backend.
+- Multiplayer e WebSocket.
 - Dificuldades avançadas e busca estratégica para os robôs.
-- Contas, autenticação, banco de dados, ranking, chat e deploy.
+- Contas autenticadas, ranking, chat e deploy. A identidade atual é uma sessão anônima HttpOnly.
 - Dados definitivos das faces de Local e artes oficiais.
 
 Consulte [a arquitetura](docs/arquitetura.md), [as decisões pendentes](docs/decisoes-pendentes.md) e [o progresso](docs/progresso.md). A próxima etapa recomendada é consolidar o catálogo de Locais e planejar uma camada autoritativa de transporte para multiplayer, sem mover regras para a interface.

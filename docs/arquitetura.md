@@ -50,17 +50,19 @@ O catálogo completo aparece em `GameView` porque os atributos das 90 cartas sã
 
 `initializeGame` aceita uma função aleatória ou uma seed. A implementação padrão usa um PRNG pequeno e determinístico para testes; em uma futura execução autoritativa online, a fonte poderá ser substituída sem mudar as regras.
 
-## Controlador local
+## Persistência autoritativa
 
-`useLocalGame` é a única camada que mantém o `GameState` completo no navegador. Componentes recebem somente `GameView` e enviam comandos sem alterar o estado. O controlador completa metadados, chama `applyGameAction`, acumula eventos para apresentação e agenda um turno de robô por revisão. Uma trava de revisão impede dois cliques humanos de processarem a mesma posição.
+O `GameState` completo existe somente no servidor e em `GameSession.stateJson`. O navegador recebe `GameView`, eventos públicos e a revisão atual. `GameActionLog` registra ação e eventos com unicidade de `actionId` por partida.
 
-O controlador foi mantido atrás de uma interface pequena (`startGame`, `submitHumanAction`, `restartGame`, `leaveGame`). Uma futura conexão remota pode substituir essa camada e manter os componentes do tabuleiro baseados em projeções e comandos.
+Cada comando carrega a partida pela sessão proprietária, compara `expectedRevision`, executa `applyGameAction` e grava snapshot + log na mesma transação serializável. A atualização condicionada à revisão impede sobrescrita concorrente. O cookie contém segredo aleatório HttpOnly; somente seu SHA-256 é persistido.
+
+`useLocalGame` mantém apenas projeção autorizada, eventos e estados visuais. Na montagem consulta `/api/games/current` antes de mostrar a configuração. Criação, reinício e abandono são comandos explícitos.
 
 ## Robô básico
 
 O robô enumera ações legais compartilhadas e aplica uma avaliação determinística: recrutamentos têm prioridade, com peso adicional para pontos, símbolos, primeira Joia do Tempo e bônus ainda ausentes; coletas são avaliadas pela necessidade das cartas conhecidas; reservas são uma alternativa de menor prioridade. Desempates podem usar o RNG injetado.
 
-Cada decisão volta ao motor autoritativo. O bot não cria fichas, não ajusta custos e não aplica uma transição por conta própria. Devoluções e escolhas de Local são ações candidatas obrigatórias com prioridade máxima.
+Cada decisão volta ao motor autoritativo. O endpoint `advance` calcula a visão privada do robô no servidor, decide, aplica e persiste uma ação por revisão até retornar ao humano ou encerrar. O navegador não escolhe ações do robô. Devoluções e escolhas de Local continuam sendo ações do mesmo motor.
 
 ## Simulador
 
