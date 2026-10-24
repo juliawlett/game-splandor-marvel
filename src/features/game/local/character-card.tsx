@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@/game/core";
 import { REGULAR_RESOURCE_ENTRIES, RESOURCE_LABELS, cardInitials } from "./game-ui";
+import { ResourceIcon } from "./resource-icon";
 
 interface CharacterCardProps {
   card: CharacterCard;
@@ -22,12 +23,12 @@ export function CharacterCard({ card, compact = false, selected = false, onSelec
         </div>
         <div className="play-card__cost" aria-label="Custo">
           {REGULAR_RESOURCE_ENTRIES.filter(([color]) => card.cost[color] > 0).map(([color, label]) => (
-            <span className={`gem gem--${color}`} title={`${label}: ${card.cost[color]}`} key={color}>{card.cost[color]}</span>
+            <span className="card-cost" title={`${label}: ${card.cost[color]}`} key={color}><ResourceIcon color={color} size="xs" />{card.cost[color]}</span>
           ))}
           {REGULAR_RESOURCE_ENTRIES.every(([color]) => card.cost[color] === 0) ? <small>Sem custo</small> : null}
         </div>
         <div className="play-card__footer">
-          <span>Bônus <i className={`gem-dot gem-dot--${card.bonusColor}`} /> {RESOURCE_LABELS[card.bonusColor]}</span>
+          <span><ResourceIcon color={card.bonusColor} size="xs" />Bônus</span>
           <span>{card.avengersSymbols} Ving.</span>
           {card.grantsTimeStone ? <span className="time-mark">Tempo</span> : null}
         </div>

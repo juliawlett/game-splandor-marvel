@@ -3,6 +3,7 @@ import { chooseBasicBotAction } from "../bots";
 import {
   applyGameAction,
   discountedCost,
+  describeCardAffordability,
   enumerateLegalActions,
   getPlayerView,
   playerBonuses,
@@ -42,6 +43,17 @@ describe("partida local", () => {
 });
 
 describe("pagamentos sugeridos e ações legais", () => {
+  it("explica faltas depois de aplicar curingas sem duplicar a regra de pagamento", () => {
+    const state = setupGame();
+    const card = state.visibleCards[1][0]!;
+    const player = state.players[0]!;
+    grantTokens(state, 0, { gray: 1 });
+    const detail = describeCardAffordability(card, playerBonuses(state, player), player.tokens);
+    expect(detail.discountedCost).toEqual(discountedCost(card, playerBonuses(state, player)));
+    expect(detail.grayAppliedToShortfall).toBe(1);
+    expect(detail.missingAfterGray).toBeGreaterThanOrEqual(0);
+    expect(detail.suggestedPayment).toBeNull();
+  });
   it("sugere fichas coloridas e completa apenas o necessário com curingas", () => {
     const state = setupGame();
     const card = state.visibleCards[1][0]!;

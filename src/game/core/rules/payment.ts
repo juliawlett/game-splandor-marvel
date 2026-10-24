@@ -34,3 +34,21 @@ export function suggestPayment(cost: Cost, available: ResourceMap): ResourceMap 
 export function suggestCardPayment(card: CharacterCard, bonuses: Cost, available: ResourceMap): ResourceMap | null {
   return suggestPayment(discountedCost(card, bonuses), available);
 }
+
+export interface CardAffordability {
+  originalCost: Cost;
+  discountedCost: Cost;
+  suggestedPayment: ResourceMap | null;
+  shortfall: Cost;
+  grayAppliedToShortfall: number;
+  missingAfterGray: number;
+}
+
+/** Explains a purchase using the same costs and wildcard allocation as the rules engine. */
+export function describeCardAffordability(card: CharacterCard, bonuses: Cost, available: ResourceMap): CardAffordability {
+  const finalCost = discountedCost(card, bonuses);
+  const shortfall = Object.fromEntries(REGULAR_COLORS.map((color) => [color, Math.max(0, finalCost[color] - available[color])])) as Cost;
+  const totalShortfall = REGULAR_COLORS.reduce((total, color) => total + shortfall[color], 0);
+  const grayAppliedToShortfall = Math.min(available.gray, totalShortfall);
+  return { originalCost: { ...card.cost }, discountedCost: finalCost, suggestedPayment: suggestPayment(finalCost, available), shortfall, grayAppliedToShortfall, missingAfterGray: totalShortfall - grayAppliedToShortfall };
+}

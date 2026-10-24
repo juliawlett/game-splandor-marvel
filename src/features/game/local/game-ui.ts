@@ -1,5 +1,17 @@
 import type { RegularColor, TokenColor } from "@/game/core";
 
+export const RESOURCE_ASSETS: Record<TokenColor, string> = {
+  yellow: "/assets/nexus/gem-yellow.png",
+  blue: "/assets/nexus/gem-blue.png",
+  orange: "/assets/nexus/gem-orange.png",
+  purple: "/assets/nexus/gem-purple.png",
+  red: "/assets/nexus/gem-red.png",
+  green: "/assets/nexus/gem-green.png",
+  gray: "/assets/nexus/gem-gray.png",
+};
+
+export const NEXUS_LOGO = "/assets/nexus/logo-infinito.png";
+
 export const RESOURCE_LABELS: Record<TokenColor, string> = {
   yellow: "Mente",
   blue: "Espaço",

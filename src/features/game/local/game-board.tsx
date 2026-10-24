@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { CharacterCard, GameView } from "@/game/core";
 import type { UiEvent } from "./use-local-game";
 import type { LocalActionInput } from "./local-game";
@@ -10,6 +11,7 @@ import { PlayerPanel } from "./player-panel";
 import { GemBank } from "./gem-bank";
 import { CardDetail, type CardSource } from "./card-detail";
 import { LocationChoicePanel, TokenReturnPanel } from "./mandatory-panels";
+import { NEXUS_LOGO } from "./game-ui";
 
 interface Selection { card: CharacterCard; source: CardSource }
 
@@ -19,13 +21,14 @@ interface GameBoardProps {
   error: string | null;
   botThinking: boolean;
   busy: boolean;
-  onAction: (action: LocalActionInput) => void;
+  onAction: (action: LocalActionInput) => Promise<boolean>;
   onRestart: () => void;
   onLeave: () => void;
 }
 
 export function GameBoard({ view, events, error, botThinking, busy, onAction, onRestart, onLeave }: GameBoardProps) {
   const [selection, setSelection] = useState<Selection | null>(null);
+  const [collectionOpen, setCollectionOpen] = useState(false);
   const human = view.players.find((player) => player.id === "human")!;
   const bots = view.players.filter((player) => player.type === "BOT");
   const active = view.players.find((player) => player.id === view.activePlayerId);
@@ -45,10 +48,10 @@ export function GameBoard({ view, events, error, botThinking, busy, onAction, on
 
   return (
     <main className="board-page">
-      <header className="board-status">
-        <div>
-          <p className="game-kicker">Turno {view.turnNumber}</p>
-          <h1>{botThinking ? `${active?.name ?? "Robô"} está calculando...` : `Vez de ${active?.name ?? "-"}`}</h1>
+      <header className="board-status board-status--redesign">
+        <div className="board-brand">
+          <Image src={NEXUS_LOGO} width={130} height={54} alt="Emblema Nexus Infinito" priority />
+          <div><p className="game-kicker">Nexus Infinito · turno {view.turnNumber}</p><h1>{botThinking ? `${active?.name ?? "Robô"} está calculando...` : active?.id === "human" ? "Sua vez" : `Vez de ${active?.name ?? "-"}`}</h1></div>
         </div>
         <div className="board-status__actions">
           {view.phase === "FINAL_ROUND" ? <span className="final-round-chip">Rodada final</span> : null}
@@ -58,11 +61,14 @@ export function GameBoard({ view, events, error, botThinking, busy, onAction, on
 
       {error ? <div className="game-error" role="alert">{error}</div> : null}
 
+      <section className="human-hud" aria-label="Seu estado de jogo"><PlayerPanel player={human} view={view} /></section>
+
       <section className="opponents" aria-label="Adversários">
         {bots.map((bot) => <PlayerPanel player={bot} view={view} compact key={bot.id} />)}
       </section>
 
       <div className="board-layout">
+        <aside className="bank-column"><GemBank key={`bank-${view.revision}`} view={view} disabled={!canAct} onAction={onAction} /></aside>
         <section className="market" aria-label="Mercado de personagens">
           {([3, 2, 1] as const).map((level) => (
             <div className={`market-row market-row--${level}`} key={level}>
@@ -83,10 +89,9 @@ export function GameBoard({ view, events, error, botThinking, busy, onAction, on
         </section>
 
         <aside className="board-sidebar">
-          <GemBank key={`bank-${view.revision}`} view={view} disabled={!canAct} onAction={onAction} />
           <section className="special-panel">
-            <div className="panel-title"><h2>Objetivos</h2><span>{view.locations.length ? `${view.locations.length} Locais` : "Sem Locais"}</span></div>
-            <p><strong>Manopla:</strong> 16 PI, bônus nas cinco cores e Joia do Tempo.</p>
+            <div className="panel-title"><h2>Manopla</h2><span>{human.score}/16 PI</span></div>
+            <p><strong>Pontos:</strong> {human.score}/16</p><p><strong>Cores:</strong> {Object.values(human.bonuses).filter((value) => value > 0).length}/5</p><p><strong>Tempo:</strong> {human.tokens.green ? "adquirida" : "pendente"}</p>
             <p><strong>Vingadores:</strong> {view.avengersOwnerId ? view.players.find((player) => player.id === view.avengersOwnerId)?.name : "sem portador"}.</p>
             {!view.locations.length ? <small>O catálogo oficial de Locais permanece pendente; a partida padrão não os instancia.</small> : null}
           </section>
@@ -97,9 +102,9 @@ export function GameBoard({ view, events, error, botThinking, busy, onAction, on
         </aside>
       </div>
 
-      <section className="human-area" aria-label="Seu painel">
-        <PlayerPanel player={human} view={view} />
-        <div className="collection-panel">
+      <section className={`human-area collection-drawer${collectionOpen ? " is-open" : ""}`} aria-label="Sua coleção">
+        <button className="collection-toggle" type="button" onClick={() => setCollectionOpen((open) => !open)} aria-expanded={collectionOpen}>Reservadas {reservedCards.length}/3 · Recrutadas {purchasedCards.length} · {collectionOpen ? "Ocultar coleção" : "Ver coleção"}</button>
+        {collectionOpen ? <div className="collection-panel">
           <div className="collection-block">
             <div className="panel-title"><h2>Reservas</h2><span>{reservedCards.length}/3</span></div>
             <div className="collection-scroll">
@@ -114,10 +119,10 @@ export function GameBoard({ view, events, error, botThinking, busy, onAction, on
               {!purchasedCards.length ? <p>Sua coleção começa vazia.</p> : null}
             </div>
           </div>
-        </div>
+        </div> : null}
       </section>
 
-      {selection ? <CardDetail key={`${selection.card.id}-${view.revision}`} card={selection.card} source={selection.source} view={view} canAct={canAct} onAction={onAction} onClose={() => setSelection(null)} /> : null}
+      {selection ? <CardDetail key={`${selection.card.id}-${view.revision}`} card={selection.card} source={selection.source} view={view} canAct={canAct} error={error} onAction={onAction} onClose={() => setSelection(null)} /> : null}
       {view.phase === "AWAITING_TOKEN_RETURN" && view.activePlayerId === "human" ? <TokenReturnPanel key={`return-${view.revision}`} view={view} onAction={onAction} /> : null}
       {view.phase === "AWAITING_LOCATION_CHOICE" && view.activePlayerId === "human" ? <LocationChoicePanel view={view} onAction={onAction} /> : null}
       {view.phase === "FINISHED" ? <GameResult view={view} onRestart={onRestart} onLeave={onLeave} /> : null}
