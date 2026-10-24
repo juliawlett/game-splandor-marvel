@@ -45,7 +45,7 @@ O bot atual não deve ser descrito como adversário avançado. As 100 simulaçõ
 
 Foi comprovado que `useLocalGame` mantinha o `GameState` exclusivamente em `useState`; F5, navegação e remontagem destruíam o snapshot. A hipótese de reinícios adicionais por Fast Refresh/Strict Mode não foi reproduzida, mas deixou de poder substituir o estado oficial porque a montagem agora apenas consulta o MySQL.
 
-MySQL é a fonte autoritativa e `localStorage` não é usado. Em 24/10/2026, o serviço `MySQL2610` e a porta local 3306 estavam acessíveis, mas não havia `DATABASE_URL` nem cliente `mysql` no PATH. Portanto, versão, schema selecionado, consulta real, migração e recuperação ponta a ponta ainda dependem das credenciais da aplicação; possuir apenas o Workbench não satisfaz esse requisito.
+MySQL é a fonte autoritativa e `localStorage` não é usado. Em 24/10/2026, a configuração local com usuário da aplicação validou conexão, migração e recuperação pela API no schema isolado de testes. Cada ambiente continua precisando de `DATABASE_URL` válida; possuir apenas o Workbench não satisfaz esse requisito.
 
 ## Privacidade e idempotência
 

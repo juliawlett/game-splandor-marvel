@@ -70,4 +70,4 @@ Atualizado em 23/10/2026.
 - [x] Controlador React reduzido a projeção, carregamento, erros e seleção visual.
 - [x] Fluxos explícitos para continuar, reiniciar e abandonar.
 - [x] Testes de serviço em memória e suíte de integração preparada para schema MySQL isolado.
-- [ ] Validar consulta, migração e recuperação ponta a ponta com credenciais reais. Em 24/10/2026, `MySQL2610` e a porta 3306 estavam ativos, mas `DATABASE_URL` não foi configurada.
+- [x] Validar consulta, migração, ação, recuperação por API e avanço de robô com o MySQL local e schema de testes isolado.
