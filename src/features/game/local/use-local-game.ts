@@ -1,105 +1,148 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { chooseBasicBotAction } from "@/game/bots";
-import { applyGameAction, getPlayerView, seededRandom, type GameEvent, type GameState } from "@/game/core";
-import { createLocalGame, type LocalActionInput, type LocalGameConfig } from "./local-game";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { GameEvent, GameView } from "@/game/core";
+import type { GameApiResponse, GameEnvelope } from "@/server/games/contracts";
+import type { LocalActionInput, LocalGameConfig } from "./local-game";
 
-export interface UiEvent {
-  id: string;
-  event: GameEvent;
+export interface UiEvent { id: string; event: GameEvent }
+export type LocalGameStatus = "RESTORING" | "FOUND" | "EMPTY" | "CREATING" | "READY" | "SENDING" | "ADVANCING" | "ERROR";
+
+async function api<T>(url: string, init?: RequestInit): Promise<T> {
+  const response = await fetch(url, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
+  const body = response.status === 204 ? null : await response.json().catch(() => null) as { error?: { message?: string } } | null;
+  if (!response.ok) throw new Error(body?.error?.message ?? "Não foi possível comunicar com o servidor.");
+  return body as T;
 }
 
 export function useLocalGame(botDelayMs = 650) {
-  const [game, setGame] = useState<GameState | null>(null);
-  const [config, setConfig] = useState<LocalGameConfig | null>(null);
+  const [view, setView] = useState<GameView | null>(null);
   const [events, setEvents] = useState<UiEvent[]>([]);
+  const [status, setStatus] = useState<LocalGameStatus>("RESTORING");
   const [error, setError] = useState<string | null>(null);
-  const actionSequence = useRef(0);
-  const botProcessingKey = useRef<string | null>(null);
-  const humanProcessedRevision = useRef<number | null>(null);
-  const randomRef = useRef(seededRandom(1));
+  const botRequestKey = useRef<string | null>(null);
 
-  const appendEvents = useCallback((newEvents: GameEvent[], revision: number) => {
-    setEvents((current) => [
-      ...current,
-      ...newEvents.map((event, index) => ({ id: `${revision}-${index}-${event.type}`, event })),
-    ].slice(-30));
-  }, []);
-
-  const startGame = useCallback((nextConfig: LocalGameConfig) => {
-    const resolved = { ...nextConfig, seed: nextConfig.seed ?? Date.now() };
-    const next = createLocalGame(resolved);
-    setGame(next);
-    setConfig(resolved);
-    setEvents([]);
+  const accept = useCallback((session: GameEnvelope) => {
+    setView(session.game);
+    setEvents(session.events);
     setError(null);
-    actionSequence.current = 0;
-    botProcessingKey.current = null;
-    humanProcessedRevision.current = null;
-    randomRef.current = seededRandom((resolved.seed ?? 1) ^ 0x85ebca6b);
   }, []);
 
-  const submitHumanAction = useCallback((input: LocalActionInput): boolean => {
-    if (!game) return false;
-    if (humanProcessedRevision.current === game.revision) return false;
-    const action = {
-      ...input,
-      playerId: "human",
-      actionId: `human-${game.revision}-${actionSequence.current++}`,
-    };
-    const result = applyGameAction(game, action);
-    if (!result.ok) {
-      setError(result.error.message);
-      return false;
+  const restore = useCallback(async () => {
+    setStatus("RESTORING");
+    setError(null);
+    try {
+      const result = await api<GameApiResponse>("/api/games/current", { cache: "no-store" });
+      if (result.session) {
+        accept(result.session);
+        setStatus("FOUND");
+      } else {
+        setView(null);
+        setEvents([]);
+        setStatus("EMPTY");
+      }
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Falha ao restaurar a partida.");
+      setStatus("ERROR");
     }
-    humanProcessedRevision.current = game.revision;
-    setGame(result.state);
-    appendEvents(result.events, result.state.revision);
-    setError(null);
-    return true;
-  }, [appendEvents, game]);
-
-  const restartGame = useCallback(() => {
-    if (config) startGame({ ...config, seed: (config.seed ?? Date.now()) + 1 });
-  }, [config, startGame]);
-
-  const leaveGame = useCallback(() => {
-    setGame(null);
-    setConfig(null);
-    setEvents([]);
-    setError(null);
-    botProcessingKey.current = null;
-    humanProcessedRevision.current = null;
-  }, []);
+  }, [accept]);
 
   useEffect(() => {
-    if (!game || game.phase === "FINISHED") return;
-    const active = game.players[game.activePlayerIndex];
-    if (!active || active.type !== "BOT") return;
-    const key = `${game.revision}-${active.id}-${game.phase}`;
-    if (botProcessingKey.current === key) return;
-    const timeout = window.setTimeout(() => {
-      botProcessingKey.current = key;
-      const decision = chooseBasicBotAction(getPlayerView(game, active.id), active.id, { random: randomRef.current });
-      if (!decision.action) {
-        setError(`${active.name}: ${decision.reason}`);
-        return;
-      }
-      const result = applyGameAction(game, decision.action);
-      if (!result.ok) {
-        setError(`${active.name}: ${result.error.message}`);
-        return;
-      }
-      setGame(result.state);
-      appendEvents(result.events, result.state.revision);
-      setError(null);
-    }, botDelayMs);
-
+    const timeout = window.setTimeout(() => { void restore(); }, 0);
     return () => window.clearTimeout(timeout);
-  }, [appendEvents, botDelayMs, game]);
+  }, [restore]);
 
-  const view = useMemo(() => game ? getPlayerView(game, "human") : null, [game]);
-  const botThinking = Boolean(game && game.players[game.activePlayerIndex]?.type === "BOT" && game.phase !== "FINISHED");
-  return { hasGame: Boolean(game), view, events, error, botThinking, startGame, submitHumanAction, restartGame, leaveGame };
+  const startGame = useCallback(async (config: LocalGameConfig) => {
+    setStatus("CREATING");
+    setError(null);
+    try {
+      const result = await api<GameApiResponse>("/api/games", { method: "POST", body: JSON.stringify(config) });
+      if (!result.session) throw new Error("O servidor não retornou a partida criada.");
+      accept(result.session);
+      setStatus("READY");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Falha ao criar a partida.");
+      setStatus("ERROR");
+    }
+  }, [accept]);
+
+  const submitHumanAction = useCallback(async (input: LocalActionInput) => {
+    if (!view || status !== "READY") return;
+    setStatus("SENDING");
+    setError(null);
+    try {
+      const result = await api<GameApiResponse>(`/api/games/${view.id}/actions`, {
+        method: "POST",
+        body: JSON.stringify({ actionId: crypto.randomUUID(), expectedRevision: view.revision, action: input }),
+      });
+      if (!result.session) throw new Error("Resposta de ação incompleta.");
+      accept(result.session);
+      setStatus("READY");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Falha ao executar a ação.");
+      setStatus("READY");
+    }
+  }, [accept, status, view]);
+
+  useEffect(() => {
+    if (!view || status !== "READY" || view.phase === "FINISHED") return;
+    const active = view.players.find((player) => player.id === view.activePlayerId);
+    if (active?.type !== "BOT") return;
+    const key = `${view.id}-${view.revision}`;
+    if (botRequestKey.current === key) return;
+    const timeout = window.setTimeout(async () => {
+      botRequestKey.current = key;
+      setStatus("ADVANCING");
+      try {
+        const result = await api<GameApiResponse>(`/api/games/${view.id}/advance`, {
+          method: "POST", body: JSON.stringify({ expectedRevision: view.revision }),
+        });
+        if (!result.session) throw new Error("Resposta automática incompleta.");
+        accept(result.session);
+        setStatus("READY");
+      } catch (cause) {
+        setError(cause instanceof Error ? cause.message : "Falha ao processar os robôs.");
+        setStatus("READY");
+      }
+    }, botDelayMs);
+    return () => window.clearTimeout(timeout);
+  }, [accept, botDelayMs, status, view]);
+
+  const restartGame = useCallback(async () => {
+    if (!view || status !== "READY") return;
+    const human = view.players.find((player) => player.id === "human");
+    const config: LocalGameConfig = {
+      humanName: human?.name ?? "Comandante",
+      botCount: view.players.filter((player) => player.type === "BOT").length as 1 | 2 | 3,
+    };
+    setStatus("CREATING");
+    try {
+      const result = await api<GameApiResponse>(`/api/games/${view.id}/restart`, { method: "POST", body: JSON.stringify({ expectedRevision: view.revision, config }) });
+      if (!result.session) throw new Error("Resposta de reinício incompleta.");
+      accept(result.session);
+      botRequestKey.current = null;
+      setStatus("READY");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Falha ao reiniciar.");
+      setStatus("READY");
+    }
+  }, [accept, status, view]);
+
+  const leaveGame = useCallback(async () => {
+    if (!view) return;
+    try {
+      await api<null>(`/api/games/${view.id}`, { method: "DELETE", body: JSON.stringify({ expectedRevision: view.revision }) });
+      setView(null); setEvents([]); setError(null); setStatus("EMPTY");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Falha ao abandonar a partida.");
+    }
+  }, [view]);
+
+  return {
+    view, events, status, error,
+    hasGame: status === "READY" || status === "SENDING" || status === "ADVANCING",
+    botThinking: status === "ADVANCING",
+    continueGame: () => setStatus("READY"), newGame: () => setStatus("EMPTY"), retryRestore: restore,
+    startGame, submitHumanAction, restartGame, leaveGame,
+  };
 }

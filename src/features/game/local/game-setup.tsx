@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import type { LocalGameConfig } from "./local-game";
 
-export function GameSetup({ onStart }: { onStart: (config: LocalGameConfig) => void }) {
+export function GameSetup({ onStart, busy = false, error = null }: { onStart: (config: LocalGameConfig) => void; busy?: boolean; error?: string | null }) {
   const [name, setName] = useState("Ana");
   const [botCount, setBotCount] = useState<1 | 2 | 3>(1);
   const [seed, setSeed] = useState("");
@@ -51,10 +51,11 @@ export function GameSetup({ onStart }: { onStart: (config: LocalGameConfig) => v
           <input value={seed} onChange={(event) => setSeed(event.target.value)} inputMode="numeric" placeholder="Ex.: 42" />
         </label>
         <div className="setup-actions">
-          <button className="game-button game-button--primary" type="submit">Iniciar partida</button>
+          <button className="game-button game-button--primary" disabled={busy} type="submit">{busy ? "Criando..." : "Iniciar partida"}</button>
           <Link className="game-button game-button--ghost" href="/">Voltar</Link>
         </div>
-        <p className="setup-note">Dificuldade básica. A partida fica somente neste navegador e não usa serviços externos.</p>
+        {error ? <p className="game-error" role="alert">{error}</p> : null}
+        <p className="setup-note">Dificuldade básica. A partida é persistida no MySQL e vinculada a esta sessão anônima.</p>
       </form>
     </main>
   );

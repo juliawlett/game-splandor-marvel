@@ -27,9 +27,9 @@ export function participantsForLocalGame(config: LocalGameConfig): ParticipantIn
   ];
 }
 
-export function createLocalGame(config: LocalGameConfig): GameState {
+export function createLocalGame(config: LocalGameConfig, gameId?: string): GameState {
   return initializeGame(participantsForLocalGame(config), cardCatalog, {
-    id: `local-${config.seed ?? Date.now()}`,
+    id: gameId ?? `local-${config.seed ?? Date.now()}`,
     seed: config.seed,
   });
 }

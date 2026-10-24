@@ -18,17 +18,18 @@ interface GameBoardProps {
   events: UiEvent[];
   error: string | null;
   botThinking: boolean;
-  onAction: (action: LocalActionInput) => boolean;
+  busy: boolean;
+  onAction: (action: LocalActionInput) => void;
   onRestart: () => void;
   onLeave: () => void;
 }
 
-export function GameBoard({ view, events, error, botThinking, onAction, onRestart, onLeave }: GameBoardProps) {
+export function GameBoard({ view, events, error, botThinking, busy, onAction, onRestart, onLeave }: GameBoardProps) {
   const [selection, setSelection] = useState<Selection | null>(null);
   const human = view.players.find((player) => player.id === "human")!;
   const bots = view.players.filter((player) => player.type === "BOT");
   const active = view.players.find((player) => player.id === view.activePlayerId);
-  const canAct = view.activePlayerId === "human" && (view.phase === "IN_PROGRESS" || view.phase === "FINAL_ROUND");
+  const canAct = !busy && view.activePlayerId === "human" && (view.phase === "IN_PROGRESS" || view.phase === "FINAL_ROUND");
   const reservedCards = human.reservedCards.flatMap((reserved) => {
     const card = reserved.cardId ? view.catalog.find((item) => item.id === reserved.cardId) : undefined;
     return card ? [card] : [];
