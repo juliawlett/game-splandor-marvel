@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { afterAll, describe, expect, it } from "vitest";
 import { PrismaClient } from "@/generated/prisma/client";
@@ -20,19 +20,20 @@ describe.skipIf(!testUrl)("integração MySQL", () => {
   it("persiste, recupera e atualiza por revisão em um schema isolado", async () => {
     const repository = new PrismaGameRepository(prisma!);
     const id = `mysql-test-${randomUUID()}`;
+    const ownerSessionId = createHash("sha256").update(`mysql-test-owner-${randomUUID()}`).digest("hex");
     createdIds.push(id);
     const state = createLocalGame({ humanName: "Teste", botCount: 1, seed: 7 }, id);
-    await repository.create("a".repeat(64), state);
-    const recovered = await repository.findAuthorized(id, "a".repeat(64));
+    await repository.create(ownerSessionId, state);
+    const recovered = await repository.findAuthorized(id, ownerSessionId);
     expect(recovered?.state).toEqual(state);
-    const result = await repository.mutate(id, "a".repeat(64), 0, "mysql-action", (snapshot) => {
+    const result = await repository.mutate(id, ownerSessionId, 0, "mysql-action", (snapshot) => {
       const action: GameAction = { type: "TAKE_SAME", color: "yellow", playerId: "human", actionId: "mysql-action" };
       const transition = applyGameAction(snapshot, action);
       if (!transition.ok) throw new Error(transition.error.message);
       return { state: transition.state, events: transition.events, action };
     });
     expect(result.state.revision).toBe(1);
-    await expect(repository.mutate(id, "a".repeat(64), 0, "stale", () => result)).rejects.toMatchObject({ code: "REVISION_CONFLICT" });
+    await expect(repository.mutate(id, ownerSessionId, 0, "stale", () => result)).rejects.toMatchObject({ code: "REVISION_CONFLICT" });
   });
 });
 
