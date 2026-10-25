@@ -60,6 +60,15 @@ Atualizado em 23/10/2026.
 3. Definir dificuldades adicionais para o bot e medir o custo de busca.
 4. Projetar servidor autoritativo, versionamento de comandos e reconexão para uma etapa futura de multiplayer.
 
+## Etapa 3 — redesign de HUD e tabuleiro
+
+- [x] HUD do jogador no topo com pontos, bônus permanentes, fichas, Manopla, Tempo e Vingadores.
+- [x] Mercado central em três níveis, banco compacto à esquerda, objetivos e histórico com prioridade reduzida à direita.
+- [x] Faixa horizontal e compacta para robôs; coleção humana expansível no rodapé.
+- [x] PNGs fornecidos integrados como assets locais tipados para as sete fichas e a marca do Nexus.
+- [x] Modal de compra esclarece custos, descontos, pagamento sugerido, curingas e faltas pelo seletor puro `describeCardAffordability`.
+- [x] Modal permanece aberto em falha de API e retorna foco ao controle de fechamento; Escape fecha apenas o modal não obrigatório.
+
 ## Correção da Etapa 2 — persistência MySQL
 
 - [x] Prisma 7 com adapter MySQL/MariaDB, schema e migração versionada.

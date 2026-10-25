@@ -66,8 +66,8 @@ export function useLocalGame(botDelayMs = 650) {
     }
   }, [accept]);
 
-  const submitHumanAction = useCallback(async (input: LocalActionInput) => {
-    if (!view || status !== "READY") return;
+  const submitHumanAction = useCallback(async (input: LocalActionInput): Promise<boolean> => {
+    if (!view || status !== "READY") return false;
     setStatus("SENDING");
     setError(null);
     try {
@@ -78,9 +78,11 @@ export function useLocalGame(botDelayMs = 650) {
       if (!result.session) throw new Error("Resposta de ação incompleta.");
       accept(result.session);
       setStatus("READY");
+      return true;
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Falha ao executar a ação.");
       setStatus("READY");
+      return false;
     }
   }, [accept, status, view]);
 

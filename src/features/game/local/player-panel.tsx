@@ -1,5 +1,6 @@
 import type { GameView, PlayerView } from "@/game/core";
 import { REGULAR_RESOURCE_ENTRIES, TOKEN_RESOURCE_ENTRIES } from "./game-ui";
+import { ResourceIcon } from "./resource-icon";
 
 interface PlayerPanelProps {
   player: PlayerView;
@@ -14,11 +15,15 @@ export function PlayerPanel({ player, view, compact = false }: PlayerPanelProps)
       <header>
         <span className="player-avatar" aria-hidden="true">{player.type === "BOT" ? "R" : player.name.slice(0, 1).toUpperCase()}</span>
         <div><strong>{player.name}</strong><small>{player.type === "BOT" ? "Robô básico" : "Você"}</small></div>
-        <b>{player.score} PI</b>
+        <b className="score-readout">{player.score}<small>/16 PI</small></b>
       </header>
+      {!compact ? <div className="bonus-strip" aria-label="Bônus permanentes">
+        <span className="hud-label">Bônus</span>
+        {REGULAR_RESOURCE_ENTRIES.map(([color, label]) => <span className={`bonus-counter${player.bonuses[color] ? " is-owned" : ""}`} key={color} title={`${label}: bônus permanente ${player.bonuses[color]}`}><ResourceIcon color={color} size="xs" />{player.bonuses[color]}</span>)}
+      </div> : null}
       <div className="player-resources" aria-label={`Recursos de ${player.name}`}>
         {TOKEN_RESOURCE_ENTRIES.map(([color, label]) => (
-          <span title={label} key={color}><i className={`gem-dot gem-dot--${color}`} />{player.tokens[color]}</span>
+          <span title={`${label}: ${player.tokens[color]} fichas`} key={color}><ResourceIcon color={color} size="xs" />{player.tokens[color]}</span>
         ))}
       </div>
       <div className="player-metrics">
@@ -32,7 +37,7 @@ export function PlayerPanel({ player, view, compact = false }: PlayerPanelProps)
           <div><span>Pontos</span><strong>{Math.min(player.score, 16)}/16</strong></div>
           <div className="bonus-pips" aria-label="Cores de bônus conquistadas">
             {REGULAR_RESOURCE_ENTRIES.map(([color, label]) => (
-              <i className={`gem-dot gem-dot--${color}${player.bonuses[color] > 0 ? " is-owned" : ""}`} title={`${label}: ${player.bonuses[color]}`} key={color} />
+              <span className={player.bonuses[color] > 0 ? "is-owned" : ""} title={`${label}: ${player.bonuses[color]}`} key={color}><ResourceIcon color={color} size="xs" label={false} /></span>
             ))}
           </div>
           <span className={player.tokens.green > 0 ? "requirement-ok" : ""}>Tempo {player.tokens.green > 0 ? "adquirida" : "pendente"}</span>

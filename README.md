@@ -56,7 +56,9 @@ npm run test:mysql
 - Projeção defensiva que mantém reservas da mesa públicas, oculta reservas do topo e nunca expõe a ordem dos baralhos.
 - Home responsiva e catálogo pesquisável/filtrável, sem arte protegida.
 - Configuração local para uma pessoa contra 1, 2 ou 3 robôs.
-- Tabuleiro responsivo com mercado, banco, coleta, reserva, recrutamento, pagamento ajustável, descarte obrigatório, histórico e resultado final.
+- Tabuleiro responsivo com HUD superior, faixa compacta de robôs, banco de joias ilustrado, mercado central, coleção expansível, histórico e objetivos.
+- Assets locais de recursos e logo do Nexus em `public/assets/nexus/`, mapeados tipadamente e renderizados com `next/image`.
+- Modal de compra explicável: custo original, descontos permanentes, custo final, recursos, sugestão de pagamento, curingas e faltas vêm do seletor puro do motor.
 - Robô básico que enumera ações legais pela visão autorizada, pontua alternativas e resolve etapas obrigatórias.
 - Simulador reproduzível com checagem de conservação de recursos, unicidade das cartas e ordem de turnos.
 - Snapshot completo persistido no MySQL e projeções produzidas por `getPlayerView`.

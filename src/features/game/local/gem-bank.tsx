@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { REGULAR_COLORS, type GameView, type RegularColor } from "@/game/core";
 import type { LocalActionInput } from "./local-game";
 import { TOKEN_RESOURCE_ENTRIES } from "./game-ui";
+import { ResourceIcon } from "./resource-icon";
 
 export function GemBank({ view, disabled, onAction }: {
   view: GameView;
@@ -52,8 +53,8 @@ export function GemBank({ view, disabled, onAction }: {
               key={color}
               aria-pressed={selected}
             >
-              <i className={`gem gem--${color}`}>{view.bank[color]}</i>
-              <span>{label}<small>Você: {human.tokens[color]}</small></span>
+              <ResourceIcon color={color} size="md" />
+              <span>{label}<strong>{view.bank[color]}</strong><small>Você: {human.tokens[color]}</small></span>
             </button>
           );
         })}
