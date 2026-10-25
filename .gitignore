@@ -4,4 +4,5 @@ coverage/
 *.tsbuildinfo
 .env*
 !.env.example
+src/generated/prisma/
 npm-debug.log*

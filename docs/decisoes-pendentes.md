@@ -28,9 +28,28 @@ O encerramento ocorre no fim da rodada corrente, depois que todos tiveram a mesm
 
 Ainda falta uma decisão de produto para um estado extremo em que nenhum jogador tenha ação principal legal. O motor não inventa passe de turno nem encerramento técnico.
 
-## Privacidade e idempotência futura
+Na Etapa 2, o controlador automático interrompe com diagnóstico quando o robô não encontra ação legal. O simulador classifica o caso como `INTERRUPTED`. Isso preserva a lacuna de regra em vez de introduzir um passe silencioso.
 
-O núcleo diferencia reservas públicas da mesa e reservas ocultas do topo, bloqueia `actionId` repetido e valida estruturalmente toda ação recebida. `matchId`, `turnId`, autenticação e `expectedRevision` pertencem à futura camada de comando/servidor; não foram adicionados como falsa infraestrutura local.
+## Estratégia dos robôs
+
+A dificuldade básica usa pesos simples e informação imperfeita. Ainda precisam ser decididos:
+
+- níveis de dificuldade e parâmetros expostos na configuração;
+- profundidade de planejamento aceitável e orçamento de CPU;
+- política de desempate entre ações igualmente avaliadas;
+- telemetria de playtests para recalibrar pesos sem alterar o catálogo silenciosamente.
+
+O bot atual não deve ser descrito como adversário avançado. As 100 simulações iniciais comprovam execução e invariantes dentro desse lote, não ausência universal de travamentos.
+
+## Causa do reinício e persistência
+
+Foi comprovado que `useLocalGame` mantinha o `GameState` exclusivamente em `useState`; F5, navegação e remontagem destruíam o snapshot. A hipótese de reinícios adicionais por Fast Refresh/Strict Mode não foi reproduzida, mas deixou de poder substituir o estado oficial porque a montagem agora apenas consulta o MySQL.
+
+MySQL é a fonte autoritativa e `localStorage` não é usado. Em 24/10/2026, a configuração local com usuário da aplicação validou conexão, migração e recuperação pela API no schema isolado de testes. Cada ambiente continua precisando de `DATABASE_URL` válida; possuir apenas o Workbench não satisfaz esse requisito.
+
+## Privacidade e idempotência
+
+O núcleo diferencia reservas públicas da mesa e reservas ocultas do topo. A camada persistente adiciona `gameSessionId`, `expectedRevision` e unicidade de `actionId`. A sessão anônima HttpOnly é adequada ao jogo local, mas não substitui contas, revogação avançada, rate limiting e autenticação para multiplayer.
 
 ## Propriedade intelectual
 
@@ -38,7 +57,9 @@ Não há imagens oficiais no projeto. Os placeholders são tipográficos. Uma pu
 
 ## Auditoria de dependências
 
-Em 23/10/2026, `npm audit --omit=dev` não encontrou vulnerabilidades nas dependências de produção. A auditoria completa aponta cinco ocorrências altas em `braces`, alcançado pela cadeia de lint do `eslint-config-next` 16.4.2. A correção automática proposta exige forçar downgrade incompatível para Next 14; por isso não foi aplicada. Reavaliar quando a configuração oficial do Next atualizar essa cadeia.
+Em 24/10/2026, após adicionar Prisma 7.10.1, `@prisma/client`, `@prisma/adapter-mariadb` e `dotenv`, `npm audit --omit=dev` e `npm audit` não encontraram vulnerabilidades. Client, adapter e dotenv são dependências de produção; `prisma` (CLI), Vitest, TypeScript e `tsx` são dependências de desenvolvimento. `tsx` executa o simulador TypeScript sem duplicar o motor em JavaScript.
+
+O npm emitiu um aviso de engine para `eslint-visitor-keys@5.0.1`: a versão instalada do Node era 22.12.0, enquanto essa dependência de desenvolvimento requer Node 22.13.0 ou superior dentro da linha 22. O lint concluiu corretamente, mas recomenda-se Node LTS 22.13+ para eliminar a diferença de ambiente.
 
 ## Prontidão operacional
 

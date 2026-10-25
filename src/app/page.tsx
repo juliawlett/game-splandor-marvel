@@ -7,15 +7,15 @@ export default function HomePage() {
     <main>
       <section className="hero">
         <div className="hero-copy">
-          <p className="status-line"><span /> Motor de regras em construção</p>
+          <p className="status-line"><span /> Partida local disponível</p>
           <h1>Reúna poder.<br />Construa o seu universo.</h1>
           <p className="hero-intro">
             Um jogo local de estratégia por turnos para 2 a 4 participantes.
             Recrute personagens, acumule bônus e complete a Manopla antes dos rivais.
           </p>
           <div className="hero-actions">
-            <Link className="primary-link" href="/catalogo">Explorar as 90 cartas</Link>
-            <a className="text-link" href="#como-funciona">Entender as regras</a>
+            <Link className="primary-link" href="/jogar">Jogar contra robôs</Link>
+            <Link className="text-link" href="/catalogo">Explorar as 90 cartas</Link>
           </div>
         </div>
         <div className="cosmic-core" aria-label="Seis recursos orbitando o núcleo do jogo">
@@ -30,7 +30,7 @@ export default function HomePage() {
       <section className="mode-section" aria-labelledby="modos-title">
         <div className="section-heading">
           <h2 id="modos-title">Escolha de modalidade</h2>
-          <p>As duas modalidades compartilharão o mesmo motor. Nesta etapa, a fundação está pronta para receber as partidas.</p>
+          <p>O modo local já usa o motor compartilhado. O multiplayer permanece reservado para uma etapa futura.</p>
         </div>
         <div className="mode-grid">
           <article className="mode-panel mode-active">
@@ -38,7 +38,7 @@ export default function HomePage() {
             <div>
               <h3>Contra robôs</h3>
               <p>Um jogador humano e até três adversários automatizados, todos sujeitos às mesmas regras.</p>
-              <span className="availability">Estrutura preparada · jogabilidade na próxima etapa</span>
+              <Link className="availability" href="/jogar">Configurar partida local</Link>
             </div>
           </article>
           <article className="mode-panel mode-disabled">
